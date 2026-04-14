@@ -1,4 +1,4 @@
-FROM php:8.3-cli
+FROM php:8.4-cli
 
 WORKDIR /app
 
@@ -16,14 +16,13 @@ RUN docker-php-ext-install \
     pdo_pgsql \
     mbstring \
     zip \
-    bcmath \
-    fileinfo
+    bcmath
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 COPY . .
 
-RUN composer install -vvv --no-interaction
+RUN composer install --no-dev --optimize-autoloader --no-interaction
 
 EXPOSE 10000
 
