@@ -11,21 +11,19 @@ RUN apt-get update && apt-get install -y \
     libzip-dev \
     libonig-dev
 
-# PHP extensions (QUAN TRỌNG)
 RUN docker-php-ext-install \
     pdo \
     pdo_pgsql \
     mbstring \
-    zip
+    zip \
+    bcmath \
+    fileinfo
 
-# Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# Copy project
 COPY . .
 
-# Install deps
-RUN composer install --no-interaction --prefer-dist --optimize-autoloader
+RUN composer install -vvv --no-interaction
 
 EXPOSE 10000
 
