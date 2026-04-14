@@ -62,3 +62,6 @@ Route::post('/register', function (Request $request) {
         'token' => $user->createToken('postman')->plainTextToken,
     ], 201);
 });
+Route::get('/debug-db', function () {
+    return DB::select('select current_database(), current_user');
+});
